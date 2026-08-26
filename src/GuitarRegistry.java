@@ -24,6 +24,14 @@ public class GuitarRegistry {
     public void addGuitar(Guitar guitar) {
         guitars.add(guitar);
     }
+    /**
+     * Returns the number of guitars stored in the registry.
+     *
+     * @return the number of guitars
+     */
+    public int getNumberOfGuitars() {
+        return guitars.size();
+    }
 
     /**
      * Finds all available values for a search filter.
