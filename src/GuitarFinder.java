@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.swing.*;
 
 /**
  * Runs the Electric Guitar Finder application.
@@ -18,6 +19,7 @@ import java.util.Set;
 public class GuitarFinder {
 
     private static final String filePath = "guitars.txt";
+    private static final String appName = "Electric Guitar Finder";
     private static GuitarRegistry guitarRegistry;
 
     /**
@@ -29,10 +31,352 @@ public class GuitarFinder {
 
         guitarRegistry = loadGuitars(filePath);
 
-        System.out.println(
-                "Electric Guitar Finder loaded "
-                        + guitarRegistry.getNumberOfGuitars()
-                        + " guitars."
+        DreamGuitar dreamGuitar = getFilters();
+
+        processSearchResults(dreamGuitar);
+
+        System.exit(0);
+    }
+
+
+    /**
+     * Gets the customer's guitar preferences using
+     * JOptionPane dialogs.
+     *
+     * @return a DreamGuitar containing the customer's choices
+     */
+
+    public static DreamGuitar getFilters() {
+
+        Map<Filter, Object> filterMap = new LinkedHashMap<>();
+
+        GuitarType type = (GuitarType) JOptionPane.showInputDialog(
+                null,
+                "Which type of guitar would you like?",
+                appName,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                GuitarType.values(),
+                GuitarType.SOLID_BODY
+        );
+
+        if (type == null) {
+            System.exit(0);
+        }
+
+        if (type != GuitarType.NA) {
+            filterMap.put(Filter.TYPE, type);
+        }
+
+        Object[] allBrands =
+                guitarRegistry.getAllFilterValues(Filter.BRAND).toArray();
+
+        Object brand = JOptionPane.showInputDialog(
+                null,
+                "Which brand would you prefer?",
+                appName,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                allBrands,
+                allBrands[0]
+        );
+
+        if (brand == null) {
+            System.exit(0);
+        }
+
+        if (!brand.equals("I don't mind")) {
+            filterMap.put(Filter.BRAND, brand);
+        }
+
+        PickupType pickupType =
+                (PickupType) JOptionPane.showInputDialog(
+                        null,
+                        "Which pickup type would you prefer?",
+                        appName,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        PickupType.values(),
+                        PickupType.HUMBUCKER
+                );
+
+        if (pickupType == null) {
+            System.exit(0);
+        }
+
+        if (pickupType != PickupType.NA) {
+            filterMap.put(Filter.PICKUP_TYPE, pickupType);
+        }
+
+        Object[] stringOptions =
+                guitarRegistry.getAllFilterValues(Filter.STRINGS).toArray();
+
+        Object numberOfStrings = JOptionPane.showInputDialog(
+                null,
+                "How many strings would you prefer?",
+                appName,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                stringOptions,
+                stringOptions[0]
+        );
+
+        if (numberOfStrings == null) {
+            System.exit(0);
+        }
+
+        if (!numberOfStrings.equals("I don't mind")) {
+            filterMap.put(Filter.STRINGS, numberOfStrings);
+        }
+
+        Handedness handedness =
+                (Handedness) JOptionPane.showInputDialog(
+                        null,
+                        "Which handedness do you require?",
+                        appName,
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        Handedness.values(),
+                        Handedness.RIGHT_HANDED
+                );
+
+        if (handedness == null) {
+            System.exit(0);
+        }
+
+        if (handedness != Handedness.NA) {
+            filterMap.put(Filter.HANDEDNESS, handedness);
+        }
+
+        String[] activeOptions = {
+                "Yes",
+                "No",
+                "I don't mind"
+        };
+
+        int activeChoice = JOptionPane.showOptionDialog(
+                null,
+                "Would you like active pickups?",
+                appName,
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                activeOptions,
+                activeOptions[0]
+        );
+
+        if (activeChoice == -1) {
+            System.exit(0);
+        }
+
+        if (activeChoice == 0) {
+            filterMap.put(Filter.ACTIVE_PICKUPS, true);
+        } else if (activeChoice == 1) {
+            filterMap.put(Filter.ACTIVE_PICKUPS, false);
+        }
+
+        Set<Genre> preferredGenres = new HashSet<>();
+
+        int addAnotherGenre = 0;
+
+        while (addAnotherGenre == 0) {
+
+            Genre genre = (Genre) JOptionPane.showInputDialog(
+                    null,
+                    "Which music genre would you like the guitar to suit?",
+                    appName,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    Genre.values(),
+                    Genre.ROCK
+            );
+
+            if (genre == null) {
+                System.exit(0);
+            }
+
+            if (genre == Genre.NA) {
+                preferredGenres.clear();
+                break;
+            }
+
+            preferredGenres.add(genre);
+
+            addAnotherGenre = JOptionPane.showConfirmDialog(
+                    null,
+                    "Would you like to add another genre?",
+                    appName,
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (addAnotherGenre == -1) {
+                System.exit(0);
+            }
+        }
+
+        if (!preferredGenres.isEmpty()) {
+            filterMap.put(Filter.GENRES, preferredGenres);
+        }
+
+        double minPrice = -1;
+
+        while (minPrice < 0) {
+
+            String input = JOptionPane.showInputDialog(
+                    null,
+                    "Enter your minimum price:",
+                    appName,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (input == null) {
+                System.exit(0);
+            }
+
+            try {
+
+                minPrice = Double.parseDouble(input);
+
+                if (minPrice < 0) {
+
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Minimum price cannot be negative.",
+                            appName,
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+
+            } catch (NumberFormatException e) {
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Please enter a valid number.",
+                        appName,
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
+
+        double maxPrice = -1;
+
+        while (maxPrice < minPrice) {
+
+            String input = JOptionPane.showInputDialog(
+                    null,
+                    "Enter your maximum price:",
+                    appName,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (input == null) {
+                System.exit(0);
+            }
+
+            try {
+
+                maxPrice = Double.parseDouble(input);
+
+                if (maxPrice < minPrice) {
+
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Maximum price must be at least $"
+                                    + minPrice + ".",
+                            appName,
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+
+            } catch (NumberFormatException e) {
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Please enter a valid number.",
+                        appName,
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
+
+        return new DreamGuitar(
+                filterMap,
+                minPrice,
+                maxPrice
+        );
+    }
+
+    /**
+     * Searches for guitars that match the customer's choices
+     * and allows the customer to select one of the matches.
+     *
+     * @param dreamGuitar the customer's preferred guitar
+     */
+
+    public static void processSearchResults(DreamGuitar dreamGuitar) {
+
+        List<Guitar> matchingGuitars =
+                guitarRegistry.findMatch(dreamGuitar);
+
+        if (matchingGuitars.isEmpty()) {
+
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Unfortunately, no guitars matched your search.",
+                    appName,
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+            return;
+        }
+
+        Map<String, Guitar> guitarOptions =
+                new LinkedHashMap<>();
+
+        for (Guitar guitar : matchingGuitars) {
+
+            String option =
+                    guitar.getBrand()
+                            + " "
+                            + guitar.getModel()
+                            + " ("
+                            + guitar.getGuitarId()
+                            + ") - $"
+                            + String.format("%.2f", guitar.getPrice());
+
+            guitarOptions.put(option, guitar);
+        }
+
+        Object[] options =
+                guitarOptions.keySet().toArray();
+
+        String choice =
+                (String) JOptionPane.showInputDialog(
+                        null,
+                        "We found "
+                                + matchingGuitars.size()
+                                + " matching guitars.\n"
+                                + "Please select one:",
+                        appName,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null,
+                        options,
+                        options[0]
+                );
+
+        if (choice == null) {
+            System.exit(0);
+        }
+
+        Guitar selectedGuitar =
+                guitarOptions.get(choice);
+
+        JOptionPane.showMessageDialog(
+                null,
+                "You selected:"
+                        + selectedGuitar.getGuitarInformation(),
+                appName,
+                JOptionPane.INFORMATION_MESSAGE
         );
     }
 
@@ -43,6 +387,7 @@ public class GuitarFinder {
      * @param filePath location of the guitar data file
      * @return registry containing all loaded guitars
      */
+
     public static GuitarRegistry loadGuitars(String filePath) {
 
         GuitarRegistry registry = new GuitarRegistry();
@@ -216,6 +561,7 @@ public class GuitarFinder {
      * @param lineNumber line currently being processed
      * @return set containing the guitar genres
      */
+
     private static Set<Genre> loadGenres(
             String rawGenres,
             int lineNumber) {
