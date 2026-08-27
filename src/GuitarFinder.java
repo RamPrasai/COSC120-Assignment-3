@@ -374,12 +374,176 @@ public class GuitarFinder {
         JOptionPane.showMessageDialog(
                 null,
                 "You selected:"
-                        + selectedGuitar.getGuitarInformation(),
+                        + selectedGuitar.getGuitarInformation()
+                        + "\n\nPlease enter your contact details to make an enquiry.",
+                appName,
+                JOptionPane.INFORMATION_MESSAGE
+        );
+
+        Customer customer = getCustomerDetails();
+
+        writeEnquiryToFile(customer, selectedGuitar);
+
+        JOptionPane.showMessageDialog(
+                null,
+                "Thank you, " + customer.name()
+                        + "!\nYour guitar enquiry has been saved."
+                        + "\nWe will contact you using the details provided.",
                 appName,
                 JOptionPane.INFORMATION_MESSAGE
         );
     }
 
+
+
+    /**
+     * Gets and validates the customer's contact details.
+     *
+     * @return a Customer containing the validated details
+     */
+
+    public static Customer getCustomerDetails() {
+
+        String name = "";
+
+        while (!name.matches("[a-zA-Z '-]{2,}")) {
+
+            name = JOptionPane.showInputDialog(
+                    null,
+                    "Please enter your full name:",
+                    appName,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (name == null) {
+                System.exit(0);
+            }
+
+            name = name.strip();
+
+            if (!name.matches("[a-zA-Z '-]{2,}")) {
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Please enter a valid name.",
+                        appName,
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
+
+        String phoneNumber = "";
+
+        while (!phoneNumber.matches("0\\d{9}")) {
+
+            phoneNumber = JOptionPane.showInputDialog(
+                    null,
+                    "Please enter your 10-digit phone number:",
+                    appName,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (phoneNumber == null) {
+                System.exit(0);
+            }
+
+            phoneNumber = phoneNumber.strip();
+
+            if (!phoneNumber.matches("0\\d{9}")) {
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Please enter a valid 10-digit phone number.",
+                        appName,
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
+
+        String emailAddress = "";
+
+        while (!emailAddress.matches(
+                "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+
+            emailAddress = JOptionPane.showInputDialog(
+                    null,
+                    "Please enter your email address:",
+                    appName,
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (emailAddress == null) {
+                System.exit(0);
+            }
+
+            emailAddress = emailAddress.strip();
+
+            if (!emailAddress.matches(
+                    "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Please enter a valid email address.",
+                        appName,
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
+
+        return new Customer(
+                name,
+                phoneNumber,
+                emailAddress
+        );
+    }
+
+    /**
+     * Writes the customer's guitar enquiry to a text file.
+     *
+     * @param customer the customer making the enquiry
+     * @param guitar the guitar selected by the customer
+     */
+    public static void writeEnquiryToFile(
+            Customer customer,
+            Guitar guitar) {
+
+        String enquiryFilePath =
+                customer.name().replace(" ", "_")
+                        + "_guitar_enquiry.txt";
+
+        Path path = Path.of(enquiryFilePath);
+
+        String enquiry =
+                "Customer: " + customer.name()
+                        + "\nPhone number: " + customer.phoneNumber()
+                        + "\nEmail address: " + customer.emailAddress()
+                        + "\n\nGuitar enquiry:"
+                        + "\nGuitar ID: " + guitar.getGuitarId()
+                        + "\nBrand: " + guitar.getBrand()
+                        + "\nModel: " + guitar.getModel()
+                        + "\nPrice: $" + String.format("%.2f", guitar.getPrice());
+
+        try {
+
+            Files.writeString(path, enquiry);
+
+        } catch (IOException e) {
+
+            JOptionPane.showMessageDialog(
+                    null,
+                    "The enquiry file could not be created.",
+                    appName,
+                    JOptionPane.ERROR_MESSAGE
+            );
+
+            System.out.println(
+                    "Error writing enquiry file: "
+                            + e.getMessage()
+            );
+
+            System.exit(0);
+        }
+    }
     /**
      * Reads the guitar data file and creates a Guitar
      * object for every guitar in the file.
