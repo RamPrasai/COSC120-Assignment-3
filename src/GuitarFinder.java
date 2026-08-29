@@ -20,6 +20,10 @@ public class GuitarFinder {
 
     private static final String filePath = "guitars.txt";
     private static final String appName = "Electric Guitar Finder";
+
+    private static final Icon icon =
+            new ImageIcon("./guitar_icon.png");
+
     private static GuitarRegistry guitarRegistry;
 
     /**
@@ -38,27 +42,26 @@ public class GuitarFinder {
         System.exit(0);
     }
 
-
     /**
      * Gets the customer's guitar preferences using
      * JOptionPane dialogs.
      *
      * @return a DreamGuitar containing the customer's choices
      */
-
     public static DreamGuitar getFilters() {
 
         Map<Filter, Object> filterMap = new LinkedHashMap<>();
 
-        GuitarType type = (GuitarType) JOptionPane.showInputDialog(
-                null,
-                "Which type of guitar would you like?",
-                appName,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                GuitarType.values(),
-                GuitarType.SOLID_BODY
-        );
+        GuitarType type =
+                (GuitarType) JOptionPane.showInputDialog(
+                        null,
+                        "Which type of guitar would you like?",
+                        appName,
+                        JOptionPane.QUESTION_MESSAGE,
+                        icon,
+                        GuitarType.values(),
+                        GuitarType.SOLID_BODY
+                );
 
         if (type == null) {
             System.exit(0);
@@ -71,15 +74,16 @@ public class GuitarFinder {
         Object[] allBrands =
                 guitarRegistry.getAllFilterValues(Filter.BRAND).toArray();
 
-        Object brand = JOptionPane.showInputDialog(
-                null,
-                "Which brand would you prefer?",
-                appName,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                allBrands,
-                allBrands[0]
-        );
+        Object brand =
+                JOptionPane.showInputDialog(
+                        null,
+                        "Which brand would you prefer?",
+                        appName,
+                        JOptionPane.QUESTION_MESSAGE,
+                        icon,
+                        allBrands,
+                        allBrands[0]
+                );
 
         if (brand == null) {
             System.exit(0);
@@ -95,7 +99,7 @@ public class GuitarFinder {
                         "Which pickup type would you prefer?",
                         appName,
                         JOptionPane.QUESTION_MESSAGE,
-                        null,
+                        icon,
                         PickupType.values(),
                         PickupType.HUMBUCKER
                 );
@@ -111,15 +115,16 @@ public class GuitarFinder {
         Object[] stringOptions =
                 guitarRegistry.getAllFilterValues(Filter.STRINGS).toArray();
 
-        Object numberOfStrings = JOptionPane.showInputDialog(
-                null,
-                "How many strings would you prefer?",
-                appName,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                stringOptions,
-                stringOptions[0]
-        );
+        Object numberOfStrings =
+                JOptionPane.showInputDialog(
+                        null,
+                        "How many strings would you prefer?",
+                        appName,
+                        JOptionPane.QUESTION_MESSAGE,
+                        icon,
+                        stringOptions,
+                        stringOptions[0]
+                );
 
         if (numberOfStrings == null) {
             System.exit(0);
@@ -135,7 +140,7 @@ public class GuitarFinder {
                         "Which handedness do you require?",
                         appName,
                         JOptionPane.QUESTION_MESSAGE,
-                        null,
+                        icon,
                         Handedness.values(),
                         Handedness.RIGHT_HANDED
                 );
@@ -154,16 +159,17 @@ public class GuitarFinder {
                 "I don't mind"
         };
 
-        int activeChoice = JOptionPane.showOptionDialog(
-                null,
-                "Would you like active pickups?",
-                appName,
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                activeOptions,
-                activeOptions[0]
-        );
+        int activeChoice =
+                JOptionPane.showOptionDialog(
+                        null,
+                        "Would you like active pickups?",
+                        appName,
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        icon,
+                        activeOptions,
+                        activeOptions[0]
+                );
 
         if (activeChoice == -1) {
             System.exit(0);
@@ -171,6 +177,7 @@ public class GuitarFinder {
 
         if (activeChoice == 0) {
             filterMap.put(Filter.ACTIVE_PICKUPS, true);
+
         } else if (activeChoice == 1) {
             filterMap.put(Filter.ACTIVE_PICKUPS, false);
         }
@@ -181,15 +188,16 @@ public class GuitarFinder {
 
         while (addAnotherGenre == 0) {
 
-            Genre genre = (Genre) JOptionPane.showInputDialog(
-                    null,
-                    "Which music genre would you like the guitar to suit?",
-                    appName,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    Genre.values(),
-                    Genre.ROCK
-            );
+            Genre genre =
+                    (Genre) JOptionPane.showInputDialog(
+                            null,
+                            "Which music genre would you like the guitar to suit?",
+                            appName,
+                            JOptionPane.QUESTION_MESSAGE,
+                            icon,
+                            Genre.values(),
+                            Genre.ROCK
+                    );
 
             if (genre == null) {
                 System.exit(0);
@@ -202,12 +210,15 @@ public class GuitarFinder {
 
             preferredGenres.add(genre);
 
-            addAnotherGenre = JOptionPane.showConfirmDialog(
-                    null,
-                    "Would you like to add another genre?",
-                    appName,
-                    JOptionPane.YES_NO_OPTION
-            );
+            addAnotherGenre =
+                    JOptionPane.showConfirmDialog(
+                            null,
+                            "Would you like to add another genre?",
+                            appName,
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            icon
+                    );
 
             if (addAnotherGenre == -1) {
                 System.exit(0);
@@ -222,12 +233,16 @@ public class GuitarFinder {
 
         while (minPrice < 0) {
 
-            String input = JOptionPane.showInputDialog(
-                    null,
-                    "Enter your minimum price:",
-                    appName,
-                    JOptionPane.QUESTION_MESSAGE
-            );
+            String input =
+                    (String) JOptionPane.showInputDialog(
+                            null,
+                            "Enter your minimum price:",
+                            appName,
+                            JOptionPane.QUESTION_MESSAGE,
+                            icon,
+                            null,
+                            null
+                    );
 
             if (input == null) {
                 System.exit(0);
@@ -235,7 +250,7 @@ public class GuitarFinder {
 
             try {
 
-                minPrice = Double.parseDouble(input);
+                minPrice = Double.parseDouble(input.strip());
 
                 if (minPrice < 0) {
 
@@ -243,7 +258,8 @@ public class GuitarFinder {
                             null,
                             "Minimum price cannot be negative.",
                             appName,
-                            JOptionPane.ERROR_MESSAGE
+                            JOptionPane.ERROR_MESSAGE,
+                            icon
                     );
                 }
 
@@ -253,7 +269,8 @@ public class GuitarFinder {
                         null,
                         "Please enter a valid number.",
                         appName,
-                        JOptionPane.ERROR_MESSAGE
+                        JOptionPane.ERROR_MESSAGE,
+                        icon
                 );
             }
         }
@@ -262,12 +279,16 @@ public class GuitarFinder {
 
         while (maxPrice < minPrice) {
 
-            String input = JOptionPane.showInputDialog(
-                    null,
-                    "Enter your maximum price:",
-                    appName,
-                    JOptionPane.QUESTION_MESSAGE
-            );
+            String input =
+                    (String) JOptionPane.showInputDialog(
+                            null,
+                            "Enter your maximum price:",
+                            appName,
+                            JOptionPane.QUESTION_MESSAGE,
+                            icon,
+                            null,
+                            null
+                    );
 
             if (input == null) {
                 System.exit(0);
@@ -275,7 +296,7 @@ public class GuitarFinder {
 
             try {
 
-                maxPrice = Double.parseDouble(input);
+                maxPrice = Double.parseDouble(input.strip());
 
                 if (maxPrice < minPrice) {
 
@@ -284,7 +305,8 @@ public class GuitarFinder {
                             "Maximum price must be at least $"
                                     + minPrice + ".",
                             appName,
-                            JOptionPane.ERROR_MESSAGE
+                            JOptionPane.ERROR_MESSAGE,
+                            icon
                     );
                 }
 
@@ -294,7 +316,8 @@ public class GuitarFinder {
                         null,
                         "Please enter a valid number.",
                         appName,
-                        JOptionPane.ERROR_MESSAGE
+                        JOptionPane.ERROR_MESSAGE,
+                        icon
                 );
             }
         }
@@ -312,8 +335,8 @@ public class GuitarFinder {
      *
      * @param dreamGuitar the customer's preferred guitar
      */
-
-    public static void processSearchResults(DreamGuitar dreamGuitar) {
+    public static void processSearchResults(
+            DreamGuitar dreamGuitar) {
 
         List<Guitar> matchingGuitars =
                 guitarRegistry.findMatch(dreamGuitar);
@@ -324,7 +347,8 @@ public class GuitarFinder {
                     null,
                     "Unfortunately, no guitars matched your search.",
                     appName,
-                    JOptionPane.INFORMATION_MESSAGE
+                    JOptionPane.INFORMATION_MESSAGE,
+                    icon
             );
 
             return;
@@ -342,7 +366,10 @@ public class GuitarFinder {
                             + " ("
                             + guitar.getGuitarId()
                             + ") - $"
-                            + String.format("%.2f", guitar.getPrice());
+                            + String.format(
+                            "%.2f",
+                            guitar.getPrice()
+                    );
 
             guitarOptions.put(option, guitar);
         }
@@ -359,7 +386,7 @@ public class GuitarFinder {
                                 + "Please select one:",
                         appName,
                         JOptionPane.INFORMATION_MESSAGE,
-                        null,
+                        icon,
                         options,
                         options[0]
                 );
@@ -375,45 +402,54 @@ public class GuitarFinder {
                 null,
                 "You selected:"
                         + selectedGuitar.getGuitarInformation()
-                        + "\n\nPlease enter your contact details to make an enquiry.",
+                        + "\n\nPlease enter your contact details "
+                        + "to make an enquiry.",
                 appName,
-                JOptionPane.INFORMATION_MESSAGE
+                JOptionPane.INFORMATION_MESSAGE,
+                icon
         );
 
-        Customer customer = getCustomerDetails();
+        Customer customer =
+                getCustomerDetails();
 
-        writeEnquiryToFile(customer, selectedGuitar);
+        writeEnquiryToFile(
+                customer,
+                selectedGuitar
+        );
 
         JOptionPane.showMessageDialog(
                 null,
-                "Thank you, " + customer.name()
+                "Thank you, "
+                        + customer.name()
                         + "!\nYour guitar enquiry has been saved."
                         + "\nWe will contact you using the details provided.",
                 appName,
-                JOptionPane.INFORMATION_MESSAGE
+                JOptionPane.INFORMATION_MESSAGE,
+                icon
         );
     }
-
-
 
     /**
      * Gets and validates the customer's contact details.
      *
      * @return a Customer containing the validated details
      */
-
     public static Customer getCustomerDetails() {
 
         String name = "";
 
         while (!name.matches("[a-zA-Z '-]{2,}")) {
 
-            name = JOptionPane.showInputDialog(
-                    null,
-                    "Please enter your full name:",
-                    appName,
-                    JOptionPane.QUESTION_MESSAGE
-            );
+            name =
+                    (String) JOptionPane.showInputDialog(
+                            null,
+                            "Please enter your full name:",
+                            appName,
+                            JOptionPane.QUESTION_MESSAGE,
+                            icon,
+                            null,
+                            null
+                    );
 
             if (name == null) {
                 System.exit(0);
@@ -427,7 +463,8 @@ public class GuitarFinder {
                         null,
                         "Please enter a valid name.",
                         appName,
-                        JOptionPane.ERROR_MESSAGE
+                        JOptionPane.ERROR_MESSAGE,
+                        icon
                 );
             }
         }
@@ -436,12 +473,16 @@ public class GuitarFinder {
 
         while (!phoneNumber.matches("0\\d{9}")) {
 
-            phoneNumber = JOptionPane.showInputDialog(
-                    null,
-                    "Please enter your 10-digit phone number:",
-                    appName,
-                    JOptionPane.QUESTION_MESSAGE
-            );
+            phoneNumber =
+                    (String) JOptionPane.showInputDialog(
+                            null,
+                            "Please enter your 10-digit phone number:",
+                            appName,
+                            JOptionPane.QUESTION_MESSAGE,
+                            icon,
+                            null,
+                            null
+                    );
 
             if (phoneNumber == null) {
                 System.exit(0);
@@ -455,7 +496,8 @@ public class GuitarFinder {
                         null,
                         "Please enter a valid 10-digit phone number.",
                         appName,
-                        JOptionPane.ERROR_MESSAGE
+                        JOptionPane.ERROR_MESSAGE,
+                        icon
                 );
             }
         }
@@ -465,12 +507,16 @@ public class GuitarFinder {
         while (!emailAddress.matches(
                 "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
 
-            emailAddress = JOptionPane.showInputDialog(
-                    null,
-                    "Please enter your email address:",
-                    appName,
-                    JOptionPane.QUESTION_MESSAGE
-            );
+            emailAddress =
+                    (String) JOptionPane.showInputDialog(
+                            null,
+                            "Please enter your email address:",
+                            appName,
+                            JOptionPane.QUESTION_MESSAGE,
+                            icon,
+                            null,
+                            null
+                    );
 
             if (emailAddress == null) {
                 System.exit(0);
@@ -485,7 +531,8 @@ public class GuitarFinder {
                         null,
                         "Please enter a valid email address.",
                         appName,
-                        JOptionPane.ERROR_MESSAGE
+                        JOptionPane.ERROR_MESSAGE,
+                        icon
                 );
             }
         }
@@ -508,24 +555,39 @@ public class GuitarFinder {
             Guitar guitar) {
 
         String enquiryFilePath =
-                customer.name().replace(" ", "_")
+                customer.name()
+                        .replace(" ", "_")
                         + "_guitar_enquiry.txt";
 
-        Path path = Path.of(enquiryFilePath);
+        Path path =
+                Path.of(enquiryFilePath);
 
         String enquiry =
-                "Customer: " + customer.name()
-                        + "\nPhone number: " + customer.phoneNumber()
-                        + "\nEmail address: " + customer.emailAddress()
+                "Customer: "
+                        + customer.name()
+                        + "\nPhone number: "
+                        + customer.phoneNumber()
+                        + "\nEmail address: "
+                        + customer.emailAddress()
                         + "\n\nGuitar enquiry:"
-                        + "\nGuitar ID: " + guitar.getGuitarId()
-                        + "\nBrand: " + guitar.getBrand()
-                        + "\nModel: " + guitar.getModel()
-                        + "\nPrice: $" + String.format("%.2f", guitar.getPrice());
+                        + "\nGuitar ID: "
+                        + guitar.getGuitarId()
+                        + "\nBrand: "
+                        + guitar.getBrand()
+                        + "\nModel: "
+                        + guitar.getModel()
+                        + "\nPrice: $"
+                        + String.format(
+                        "%.2f",
+                        guitar.getPrice()
+                );
 
         try {
 
-            Files.writeString(path, enquiry);
+            Files.writeString(
+                    path,
+                    enquiry
+            );
 
         } catch (IOException e) {
 
@@ -533,7 +595,8 @@ public class GuitarFinder {
                     null,
                     "The enquiry file could not be created.",
                     appName,
-                    JOptionPane.ERROR_MESSAGE
+                    JOptionPane.ERROR_MESSAGE,
+                    icon
             );
 
             System.out.println(
@@ -544,6 +607,7 @@ public class GuitarFinder {
             System.exit(0);
         }
     }
+
     /**
      * Reads the guitar data file and creates a Guitar
      * object for every guitar in the file.
@@ -551,18 +615,21 @@ public class GuitarFinder {
      * @param filePath location of the guitar data file
      * @return registry containing all loaded guitars
      */
+    public static GuitarRegistry loadGuitars(
+            String filePath) {
 
-    public static GuitarRegistry loadGuitars(String filePath) {
+        GuitarRegistry registry =
+                new GuitarRegistry();
 
-        GuitarRegistry registry = new GuitarRegistry();
-
-        Path path = Path.of(filePath);
+        Path path =
+                Path.of(filePath);
 
         List<String> fileContents = null;
 
         try {
 
-            fileContents = Files.readAllLines(path);
+            fileContents =
+                    Files.readAllLines(path);
 
         } catch (IOException e) {
 
@@ -571,38 +638,62 @@ public class GuitarFinder {
                             + "Check that the file path is correct."
             );
 
-            System.out.println("Error message: " + e.getMessage());
+            System.out.println(
+                    "Error message: "
+                            + e.getMessage()
+            );
 
             System.exit(0);
         }
 
         // Start at 1 because line 0 contains the headings.
-        for (int i = 1; i < fileContents.size(); i++) {
+        for (int i = 1;
+             i < fileContents.size();
+             i++) {
 
-            String[] info = fileContents.get(i).split("\\[");
+            String[] info =
+                    fileContents
+                            .get(i)
+                            .split("\\[");
 
-            String[] guitarInfo = info[0].split(",");
+            String[] guitarInfo =
+                    info[0].split(",");
 
-            String genresRaw = info[1].replace("],", "");
-            String description = info[2].replace("]", "").strip();
+            String genresRaw =
+                    info[1]
+                            .replace("],", "");
 
-            String guitarId = guitarInfo[0].strip();
-            String brand = guitarInfo[1].strip();
-            String model = guitarInfo[2].strip();
+            String description =
+                    info[2]
+                            .replace("]", "")
+                            .strip();
+
+            String guitarId =
+                    guitarInfo[0].strip();
+
+            String brand =
+                    guitarInfo[1].strip();
+
+            String model =
+                    guitarInfo[2].strip();
 
             GuitarType type = null;
 
             try {
 
-                type = GuitarType.valueOf(
-                        guitarInfo[3].strip().toUpperCase()
-                );
+                type =
+                        GuitarType.valueOf(
+                                guitarInfo[3]
+                                        .strip()
+                                        .toUpperCase()
+                        );
 
             } catch (IllegalArgumentException e) {
 
                 System.out.println(
                         "Guitar type could not be read on line "
-                                + (i + 1) + "."
+                                + (i + 1)
+                                + "."
                 );
 
                 System.exit(0);
@@ -612,15 +703,18 @@ public class GuitarFinder {
 
             try {
 
-                price = Double.parseDouble(
-                        guitarInfo[4].strip()
-                );
+                price =
+                        Double.parseDouble(
+                                guitarInfo[4]
+                                        .strip()
+                        );
 
             } catch (NumberFormatException e) {
 
                 System.out.println(
                         "Price could not be read on line "
-                                + (i + 1) + "."
+                                + (i + 1)
+                                + "."
                 );
 
                 System.exit(0);
@@ -630,15 +724,18 @@ public class GuitarFinder {
 
             try {
 
-                numberOfStrings = Integer.parseInt(
-                        guitarInfo[5].strip()
-                );
+                numberOfStrings =
+                        Integer.parseInt(
+                                guitarInfo[5]
+                                        .strip()
+                        );
 
             } catch (NumberFormatException e) {
 
                 System.out.println(
                         "Number of strings could not be read on line "
-                                + (i + 1) + "."
+                                + (i + 1)
+                                + "."
                 );
 
                 System.exit(0);
@@ -648,15 +745,19 @@ public class GuitarFinder {
 
             try {
 
-                pickupType = PickupType.valueOf(
-                        guitarInfo[6].strip().toUpperCase()
-                );
+                pickupType =
+                        PickupType.valueOf(
+                                guitarInfo[6]
+                                        .strip()
+                                        .toUpperCase()
+                        );
 
             } catch (IllegalArgumentException e) {
 
                 System.out.println(
                         "Pickup type could not be read on line "
-                                + (i + 1) + "."
+                                + (i + 1)
+                                + "."
                 );
 
                 System.exit(0);
@@ -666,41 +767,77 @@ public class GuitarFinder {
 
             try {
 
-                handedness = Handedness.valueOf(
-                        guitarInfo[7].strip().toUpperCase()
-                );
+                handedness =
+                        Handedness.valueOf(
+                                guitarInfo[7]
+                                        .strip()
+                                        .toUpperCase()
+                        );
 
             } catch (IllegalArgumentException e) {
 
                 System.out.println(
                         "Handedness could not be read on line "
-                                + (i + 1) + "."
+                                + (i + 1)
+                                + "."
                 );
 
                 System.exit(0);
             }
 
             boolean activePickups =
-                    guitarInfo[8].strip().equalsIgnoreCase("true");
+                    guitarInfo[8]
+                            .strip()
+                            .equalsIgnoreCase("true");
 
-            Set<Genre> genres = loadGenres(
-                    genresRaw,
-                    i + 1
-            );
+            Set<Genre> genres =
+                    loadGenres(
+                            genresRaw,
+                            i + 1
+                    );
 
             Map<Filter, Object> filterMap =
                     new LinkedHashMap<>();
 
-            filterMap.put(Filter.BRAND, brand);
-            filterMap.put(Filter.TYPE, type);
-            filterMap.put(Filter.PICKUP_TYPE, pickupType);
-            filterMap.put(Filter.STRINGS, numberOfStrings);
-            filterMap.put(Filter.HANDEDNESS, handedness);
-            filterMap.put(Filter.ACTIVE_PICKUPS, activePickups);
-            filterMap.put(Filter.GENRES, genres);
+            filterMap.put(
+                    Filter.BRAND,
+                    brand
+            );
+
+            filterMap.put(
+                    Filter.TYPE,
+                    type
+            );
+
+            filterMap.put(
+                    Filter.PICKUP_TYPE,
+                    pickupType
+            );
+
+            filterMap.put(
+                    Filter.STRINGS,
+                    numberOfStrings
+            );
+
+            filterMap.put(
+                    Filter.HANDEDNESS,
+                    handedness
+            );
+
+            filterMap.put(
+                    Filter.ACTIVE_PICKUPS,
+                    activePickups
+            );
+
+            filterMap.put(
+                    Filter.GENRES,
+                    genres
+            );
 
             DreamGuitar dreamGuitar =
-                    new DreamGuitar(filterMap);
+                    new DreamGuitar(
+                            filterMap
+                    );
 
             Guitar guitar =
                     new Guitar(
@@ -725,22 +862,26 @@ public class GuitarFinder {
      * @param lineNumber line currently being processed
      * @return set containing the guitar genres
      */
-
     private static Set<Genre> loadGenres(
             String rawGenres,
             int lineNumber) {
 
-        Set<Genre> genres = new HashSet<>();
+        Set<Genre> genres =
+                new HashSet<>();
 
-        String[] genreData = rawGenres.split(",");
+        String[] genreData =
+                rawGenres.split(",");
 
         for (String genreText : genreData) {
 
             try {
 
-                Genre genre = Genre.valueOf(
-                        genreText.strip().toUpperCase()
-                );
+                Genre genre =
+                        Genre.valueOf(
+                                genreText
+                                        .strip()
+                                        .toUpperCase()
+                        );
 
                 genres.add(genre);
 
@@ -748,7 +889,8 @@ public class GuitarFinder {
 
                 System.out.println(
                         "Genre could not be read on line "
-                                + lineNumber + "."
+                                + lineNumber
+                                + "."
                 );
 
                 System.exit(0);
