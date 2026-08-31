@@ -720,13 +720,34 @@ public class GuitarFinder {
                 System.exit(0);
             }
 
+            float weightKg = 0;
+
+            try {
+
+                weightKg =
+                        Float.parseFloat(
+                                guitarInfo[5]
+                                        .strip()
+                        );
+
+            } catch (NumberFormatException e) {
+
+                System.out.println(
+                        "Weight could not be read on line "
+                                + (i + 1)
+                                + "."
+                );
+
+                System.exit(0);
+            }
+
             int numberOfStrings = 0;
 
             try {
 
                 numberOfStrings =
                         Integer.parseInt(
-                                guitarInfo[5]
+                                guitarInfo[6]
                                         .strip()
                         );
 
@@ -747,7 +768,7 @@ public class GuitarFinder {
 
                 pickupType =
                         PickupType.valueOf(
-                                guitarInfo[6]
+                                guitarInfo[7]
                                         .strip()
                                         .toUpperCase()
                         );
@@ -769,7 +790,7 @@ public class GuitarFinder {
 
                 handedness =
                         Handedness.valueOf(
-                                guitarInfo[7]
+                                guitarInfo[8]
                                         .strip()
                                         .toUpperCase()
                         );
@@ -786,7 +807,7 @@ public class GuitarFinder {
             }
 
             boolean activePickups =
-                    guitarInfo[8]
+                    guitarInfo[9]
                             .strip()
                             .equalsIgnoreCase("true");
 
@@ -845,6 +866,7 @@ public class GuitarFinder {
                             model,
                             description,
                             price,
+                            weightKg,
                             dreamGuitar
                     );
 

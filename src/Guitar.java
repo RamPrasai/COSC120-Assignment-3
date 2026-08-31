@@ -13,6 +13,7 @@ public class Guitar {
     private final String model;
     private final String description;
     private final double price;
+    private final float weightKg;
     private final DreamGuitar dreamGuitar;
 
     /**
@@ -22,18 +23,21 @@ public class Guitar {
      * @param model model name of the guitar
      * @param description description of the guitar
      * @param price price of the guitar
+     * @param weightKg weight of the guitar in kilograms
      * @param dreamGuitar searchable characteristics of the guitar
      */
     public Guitar(String guitarId,
                   String model,
                   String description,
                   double price,
+                  float weightKg,
                   DreamGuitar dreamGuitar) {
 
         this.guitarId = guitarId;
         this.model = model;
         this.description = description;
         this.price = price;
+        this.weightKg = weightKg;
         this.dreamGuitar = dreamGuitar;
     }
 
@@ -84,6 +88,15 @@ public class Guitar {
     }
 
     /**
+     * Returns the weight of the guitar.
+     *
+     * @return guitar weight in kilograms
+     */
+    public float getWeightKg() {
+        return weightKg;
+    }
+
+    /**
      * Returns the searchable characteristics
      * belonging to this guitar.
      *
@@ -112,6 +125,8 @@ public class Guitar {
         output += dreamGuitar.getInfo();
 
         output += "\nPrice: $" + df.format(price);
+
+        output += "\nWeight: " + weightKg + " kg";
 
         return output;
     }
