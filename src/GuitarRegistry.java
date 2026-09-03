@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,7 +13,7 @@ import java.util.Set;
  */
 public class GuitarRegistry {
 
-    private final Set<Guitar> guitars = new HashSet<>();
+    private final Set<Guitar> guitars = new LinkedHashSet<>();
 
     /**
      * Adds a guitar to the registry.
@@ -24,6 +23,7 @@ public class GuitarRegistry {
     public void addGuitar(Guitar guitar) {
         guitars.add(guitar);
     }
+
     /**
      * Returns the number of guitars stored in the registry.
      *
@@ -63,7 +63,7 @@ public class GuitarRegistry {
             }
         }
 
-        allValues.add("I don't mind");
+        allValues.add("NA");
 
         return allValues;
     }

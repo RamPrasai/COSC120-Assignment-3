@@ -89,7 +89,7 @@ public class GuitarFinder {
             System.exit(0);
         }
 
-        if (!brand.equals("I don't mind")) {
+        if (!brand.equals("NA")) {
             filterMap.put(Filter.BRAND, brand);
         }
 
@@ -130,7 +130,7 @@ public class GuitarFinder {
             System.exit(0);
         }
 
-        if (!numberOfStrings.equals("I don't mind")) {
+        if (!numberOfStrings.equals("NA")) {
             filterMap.put(Filter.STRINGS, numberOfStrings);
         }
 
@@ -156,7 +156,7 @@ public class GuitarFinder {
         String[] activeOptions = {
                 "Yes",
                 "No",
-                "I don't mind"
+                "NA"
         };
 
         int activeChoice =
