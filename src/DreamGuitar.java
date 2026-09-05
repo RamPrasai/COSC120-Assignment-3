@@ -63,7 +63,7 @@ public class DreamGuitar {
      * @return the value stored for that filter
      */
     public Object getFilter(Filter key) {
-        return getAllFilters().get(key);
+        return filterMap.get(key);
     }
 
     /**
