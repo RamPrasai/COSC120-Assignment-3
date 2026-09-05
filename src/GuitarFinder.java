@@ -89,7 +89,7 @@ public class GuitarFinder {
             System.exit(0);
         }
 
-        if (!brand.equals("NA")) {
+        if (!brand.equals("I don't mind")) {
             filterMap.put(Filter.BRAND, brand);
         }
 
@@ -130,7 +130,7 @@ public class GuitarFinder {
             System.exit(0);
         }
 
-        if (!numberOfStrings.equals("NA")) {
+        if (!numberOfStrings.equals("I don't mind")) {
             filterMap.put(Filter.STRINGS, numberOfStrings);
         }
 
@@ -156,7 +156,7 @@ public class GuitarFinder {
         String[] activeOptions = {
                 "Yes",
                 "No",
-                "NA"
+                "I don't mind"
         };
 
         int activeChoice =
@@ -580,7 +580,10 @@ public class GuitarFinder {
                         + String.format(
                         "%.2f",
                         guitar.getPrice()
-                );
+                )
+                        + "\nWeight: "
+                        + guitar.getWeightKg()
+                        + " kg";
 
         try {
 

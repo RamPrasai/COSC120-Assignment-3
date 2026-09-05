@@ -63,7 +63,7 @@ public class GuitarRegistry {
             }
         }
 
-        allValues.add("NA");
+        allValues.add("I don't mind");
 
         return allValues;
     }
