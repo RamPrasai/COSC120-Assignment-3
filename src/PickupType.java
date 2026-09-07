@@ -17,6 +17,7 @@ public enum PickupType {
      *
      * @return the pickup type as text
      */
+    @Override
     public String toString() {
         return switch (this) {
             case HUMBUCKER -> "Humbucker";

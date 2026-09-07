@@ -17,6 +17,7 @@ public enum GuitarType {
      *
      * @return the guitar type as text
      */
+    @Override
     public String toString() {
         return switch (this) {
             case SOLID_BODY -> "Solid Body";

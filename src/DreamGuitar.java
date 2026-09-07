@@ -127,7 +127,7 @@ public class DreamGuitar {
 
         for (Filter key : dreamGuitar.getAllFilters().keySet()) {
 
-            if (!this.getAllFilters().containsKey(key)) {
+            if (!filterMap.containsKey(key)) {
                 return false;
             }
 

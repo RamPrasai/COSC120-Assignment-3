@@ -16,6 +16,7 @@ public enum Handedness {
      *
      * @return the handedness as text
      */
+    @Override
     public String toString() {
         return switch (this) {
             case RIGHT_HANDED -> "Right Handed";

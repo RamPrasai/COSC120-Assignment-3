@@ -20,6 +20,7 @@ public enum Filter {
      *
      * @return the filter name as text
      */
+    @Override
     public String toString() {
         return switch (this) {
             case TYPE -> "Guitar type";

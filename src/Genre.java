@@ -19,6 +19,7 @@ public enum Genre {
      *
      * @return the genre as text
      */
+    @Override
     public String toString() {
         return switch (this) {
             case METAL -> "Metal";
