@@ -10,12 +10,18 @@ import javax.swing.*;
 
 /**
  * Runs the Electric Guitar Finder application.
- * This class loads the guitar data and will control
+ * This class loads the guitar data and controls
  * the interaction with the user.
+ *
+ * Generative AI acknowledgement:
+ * ChatGPT was used to help understand the assessment requirements
+ * and to assist with debugging data conversion and filtering/search logic.
+ * The final code was reviewed and tested by the author.
  *
  * @author Ram Prasai
  * GitHub: https://github.com/RamPrasai/COSC120-Assignment-3
  */
+
 public class GuitarFinder {
 
     private static final String filePath = "guitars.txt";
