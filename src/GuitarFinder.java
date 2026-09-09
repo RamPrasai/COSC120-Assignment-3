@@ -14,9 +14,20 @@ import javax.swing.*;
  * the interaction with the user.
  *
  * Generative AI acknowledgement:
- * ChatGPT was used to help understand the assessment requirements
- * and to assist with debugging data conversion and filtering/search logic.
- * The final code was reviewed and tested by the author.
+ * ChatGPT was used to help understand the assessment requirements,
+ * review the rubric, debug data conversion from guitars.txt, and
+ * troubleshoot the filtering and search logic.
+ *
+ * Example prompts used:
+ * - "Help me understand the requirements for this assessment."
+ * - "Why is my guitar filtering not returning the expected matches?"
+ * - "How can I correctly convert values from guitars.txt into Java data types?"
+ *
+ * AI assistance included explanations of assessment requirements,
+ * debugging suggestions, and code suggestions related to data
+ * conversion and filtering/search logic.
+ *
+ * The final program was reviewed, tested and run by the author.
  *
  * @author Ram Prasai
  * GitHub: https://github.com/RamPrasai/COSC120-Assignment-3
